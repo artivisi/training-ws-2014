@@ -23,6 +23,11 @@ public class AbsenWS {
         return "Hello " + txt + " !";
     }
     
+    @WebMethod(operationName = "tambah")
+    public Integer tambah(@WebParam(name = "num1") Integer x, @WebParam(name = "num2") Integer y){
+        return x + y;
+    }
+    
     @WebMethod(operationName = "simpanKaryawan")
     public void simpanKaryawan(@WebParam(name="karyawan") Karyawan k){
         absenService.simpan(k);

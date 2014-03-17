@@ -1,3 +1,5 @@
 # Maven Ignore
 target
 
+# Netbeans Ignore
+nb-configuration.xml

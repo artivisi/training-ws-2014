@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://server.ws.absen.aplikasi.ws.training.endy.muhardin.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://server.ws.absen.aplikasi.ws.training.endy.muhardin.com/">
+
+<xs:element name="cariKaryawanByNama" type="tns:cariKaryawanByNama"/>
+
+<xs:element name="cariKaryawanByNamaResponse" type="tns:cariKaryawanByNamaResponse"/>
+
+<xs:element name="cariKaryawanByNip" type="tns:cariKaryawanByNip"/>
+
+<xs:element name="cariKaryawanByNipResponse" type="tns:cariKaryawanByNipResponse"/>
+
+<xs:element name="hello" type="tns:hello"/>
+
+<xs:element name="helloResponse" type="tns:helloResponse"/>
+
+<xs:element name="simpanKaryawan" type="tns:simpanKaryawan"/>
+
+<xs:element name="simpanKaryawanResponse" type="tns:simpanKaryawanResponse"/>
+
+<xs:element name="tambah" type="tns:tambah"/>
+
+<xs:element name="tambahResponse" type="tns:tambahResponse"/>
+
+<xs:complexType name="tambah">
+<xs:sequence>
+<xs:element name="num1" type="xs:int" minOccurs="0"/>
+<xs:element name="num2" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="tambahResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cariKaryawanByNip">
+<xs:sequence>
+<xs:element name="nip" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cariKaryawanByNipResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:karyawan" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="karyawan">
+<xs:sequence>
+<xs:element name="aktif" type="xs:boolean" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="nama" type="xs:string" minOccurs="0"/>
+<xs:element name="nip" type="xs:int" minOccurs="0"/>
+<xs:element name="tanggalLahir" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="telp" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="simpanKaryawan">
+<xs:sequence>
+<xs:element name="karyawan" type="tns:karyawan" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="simpanKaryawanResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cariKaryawanByNama">
+<xs:sequence>
+<xs:element name="nama" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cariKaryawanByNamaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:karyawan" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

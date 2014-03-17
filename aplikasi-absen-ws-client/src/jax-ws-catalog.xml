@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/aplikasi-absen-ws-server/AbsenWS?WSDL" uri="wsdl/localhost_8080/aplikasi-absen-ws-server/AbsenWS.wsdl"/>
+    <system systemId="http://localhost:8080/aplikasi-absen-ws-server/AbsenWS?xsd=1" uri="wsdl/localhost_8080/aplikasi-absen-ws-server/AbsenWS.xsd_1.xsd"/>
+</catalog>

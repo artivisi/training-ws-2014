@@ -17,15 +17,10 @@ public class KalkulatorServlet extends HttpServlet {
         String num2 = req.getParameter("y");
         
         Integer hasil = Integer.valueOf(num1) + Integer.valueOf(num2);
-        
-        resp.setContentType("text/html");
-        PrintWriter output = resp.getWriter();
-        
-        output.println("<b>Hello</b> World <br>");
-        output.println(num1 + " + " +num2 + " = "+hasil);
-        
-        
-        output.close();
+        req.setAttribute("num1", num1);
+        req.setAttribute("num2", num2);
+        req.setAttribute("hasil", hasil);
+        req.getRequestDispatcher("/hasil.jsp").forward(req, resp);
     }
     
 }

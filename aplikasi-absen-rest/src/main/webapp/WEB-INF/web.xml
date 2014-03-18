@@ -18,6 +18,17 @@
         <url-pattern>/hitung.php</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>absen</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>absen</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30

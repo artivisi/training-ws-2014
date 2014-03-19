@@ -21,7 +21,7 @@
         <div class="container">
             <h1>Edit Karyawan</h1>
 
-            <form class="form-horizontal">
+            <form class="form-horizontal" method="post">
                 <div class="form-group">
                     <label for="nip" class="col-sm-2 control-label">NIP</label>
                     <div class="col-sm-10">
@@ -38,12 +38,6 @@
                     <label for="email" class="col-sm-2 control-label">Email</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="tanggalLahir" class="col-sm-2 control-label">Tanggal Lahir</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="tanggalLahir" name="tanggalLahir" placeholder="dd-MM-yyyy">
                     </div>
                 </div>
                 <div class="form-group">

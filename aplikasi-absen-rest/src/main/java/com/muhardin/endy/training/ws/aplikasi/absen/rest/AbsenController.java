@@ -2,8 +2,13 @@ package com.muhardin.endy.training.ws.aplikasi.absen.rest;
 
 import com.muhardin.endy.training.ws.aplikasi.absen.Karyawan;
 import com.muhardin.endy.training.ws.aplikasi.absen.service.AbsenService;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AbsenController {
     
     private AbsenService absenService = new AbsenService();
+    
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.registerCustomEditor(Date.class, 
+                new CustomDateEditor(new SimpleDateFormat("dd-MM-yyyy"), true));
+    }
     
     @RequestMapping("/karyawan/info")
     public ModelMap infoKaryawan(){

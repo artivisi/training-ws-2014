@@ -44,7 +44,8 @@ public class AbsenController {
     }
     
     @RequestMapping(value="/karyawan/form", method = RequestMethod.GET)
-    public void displayFormEditKaryawan(){
+    public ModelMap displayFormEditKaryawan(){
+        return new ModelMap(new Karyawan());
     }
     
     @RequestMapping(value="/karyawan/form", method = RequestMethod.POST)

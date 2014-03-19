@@ -16,4 +16,11 @@ public class AbsenController {
         mm.addAttribute("karyawan", absenService.cariByNip(100));
         return mm;
     }
+    
+    @RequestMapping("/karyawan/list")
+    public ModelMap daftarKaryawan(){
+        ModelMap mm = new ModelMap();
+        mm.addAttribute("daftarKaryawan", absenService.cariByNama("100"));
+        return mm;
+    }
 }

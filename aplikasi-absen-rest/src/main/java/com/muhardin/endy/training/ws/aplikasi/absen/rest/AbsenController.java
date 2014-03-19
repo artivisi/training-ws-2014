@@ -23,4 +23,8 @@ public class AbsenController {
         mm.addAttribute("daftarKaryawan", absenService.cariByNama("100"));
         return mm;
     }
+    
+    @RequestMapping("/karyawan/form")
+    public void displayFormEditKaryawan(){
+    }
 }

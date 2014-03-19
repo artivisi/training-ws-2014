@@ -3,11 +3,25 @@ package com.muhardin.endy.training.ws.aplikasi.absen;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class Karyawan {
+    
+    @NotNull @Min(100)
     private Integer nip;
+    
+    @NotNull @NotEmpty @Size(min = 4)
     private String nama;
+    
+    @NotNull @Past
     private Date tanggalLahir;
+    
+    @Email
     private String email;
     private List<String> telp = new ArrayList<String>();
     private Boolean aktif;

@@ -60,7 +60,7 @@ public class AbsenController {
         if(errors.hasErrors()) {
             List<FieldError> daftarError = errors.getFieldErrors();
             for (FieldError fieldError : daftarError) {
-                System.out.println(fieldError.getField() +" : " +fieldError.getDefaultMessage());
+                System.out.println(fieldError.getField() +" : " +fieldError.getCode());
             }
             return "karyawan/form";
         }

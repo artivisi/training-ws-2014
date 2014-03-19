@@ -27,50 +27,58 @@
             <form class="form-horizontal" method="post">
 
                 <s:bind path="karyawan.nip">
-                    <div class="form-group <c:out value=" ${status.error ? 'has-error' : '' }" />">
+                    <div class="form-group <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
                         <label for="nip" class="col-sm-2 control-label">NIP</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="nip" name="nip" placeholder="NIP">
+                            <c:if test="${status.error}">
+                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                            </c:if>
                         </div>
                         <c:if test="${status.error}">
-                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                            <span class="help-inline">${status.errorMessage}</span>
+                            <span class="help-block">${status.errorMessage}</span>
                         </c:if>
                     </div>
                 </s:bind>
                 <s:bind path="karyawan.nama">
-                    <div class="form-group <c:out value=" ${status.error ? 'has-error' : '' }" />">
+                    <div class="form-group <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
                         <label for="nama" class="col-sm-2 control-label">Nama</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
+                            <c:if test="${status.error}">
+                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                            </c:if>
                         </div>
                         <c:if test="${status.error}">
-                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                            <span class="help-inline">${status.errorMessage}</span>
+                            <span class="help-block">${status.errorMessage}</span>
                         </c:if>
                     </div>
                 </s:bind>
                 <s:bind path="karyawan.email">
-                    <div class="form-group <c:out value=" ${status.error ? 'has-error' : '' }" />">
+                    <div class="form-group <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
                         <label for="email" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                            <c:if test="${status.error}">
+                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                            </c:if>
                         </div>
                         <c:if test="${status.error}">
-                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                            <span class="help-inline">${status.errorMessage}</span>
+                            <span class="help-block">${status.errorMessage}</span>
                         </c:if>
                     </div>
                 </s:bind>
                 <s:bind path="karyawan.tanggalLahir">
-                    <div class="form-group <c:out value=" ${status.error ? 'has-error' : '' }" />">
+                    <div class="form-group <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
                         <label for="tanggalLahir" class="col-sm-2 control-label">Tanggal Lahir</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="tanggalLahir" name="tanggalLahir" placeholder="dd-MM-yyyy">
+                            <c:if test="${status.error}">
+                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                            </c:if>
                         </div>
                         <c:if test="${status.error}">
-                            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-                            <span class="help-inline">${status.errorMessage}</span>
+                            <span class="help-block">${status.errorMessage}</span>
                         </c:if>
                     </div>
                 </s:bind>

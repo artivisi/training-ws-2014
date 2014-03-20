@@ -39,6 +39,7 @@ public class AbsenController {
     @RequestMapping("/karyawan/list")
     public ModelMap daftarKaryawan(){
         ModelMap mm = new ModelMap();
+        mm.addAttribute("screenAktif", "karyawan");
         mm.addAttribute("daftarKaryawan", absenService.cariByNama("100"));
         return mm;
     }

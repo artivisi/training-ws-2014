@@ -62,7 +62,7 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="./">Logout</a></li>
+                        <li class="active"><a href="<%= request.getContextPath() %>/j_spring_security_logout">Logout</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

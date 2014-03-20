@@ -7,7 +7,9 @@
            http://www.springframework.org/schema/security/spring-security.xsd">
     
     <http>
-        <intercept-url pattern="/api/karyawan/**" access="ROLE_USER" />
+        <intercept-url pattern="/api/karyawan/info" access="ROLE_USER" />
+        <intercept-url pattern="/api/karyawan/list" access="ROLE_USER" />
+        <intercept-url pattern="/api/karyawan/form" access="ROLE_ADMIN" />
         <form-login login-page="/login.html"/>
         <logout />
     </http>

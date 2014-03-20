@@ -24,7 +24,7 @@
         <div class="container">
             <h1>Edit Karyawan</h1>
 
-            <form class="form-horizontal" method="post">
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
 
                 <s:bind path="karyawan.nip">
                     <div class="form-group <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
@@ -82,6 +82,12 @@
                         </c:if>
                     </div>
                 </s:bind>
+                <div class="form-group">
+                    <label for="foto" class="col-sm-2 control-label">Foto</label>
+                    <div class="col-sm-6">
+                        <input type="file" class="form-control" id="foto" name="foto" placeholder="Upload Foto Anda">
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
                         <button type="submit" class="btn btn-primary">Simpan</button>

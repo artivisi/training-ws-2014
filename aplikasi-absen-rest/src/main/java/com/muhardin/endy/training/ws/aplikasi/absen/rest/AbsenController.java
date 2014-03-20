@@ -2,6 +2,7 @@ package com.muhardin.endy.training.ws.aplikasi.absen.rest;
 
 import com.muhardin.endy.training.ws.aplikasi.absen.Karyawan;
 import com.muhardin.endy.training.ws.aplikasi.absen.service.AbsenService;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class AbsenController {
@@ -52,7 +55,8 @@ public class AbsenController {
     @RequestMapping(value="/karyawan/form", method = RequestMethod.POST)
     public String prosesFormKaryawan(@ModelAttribute @Valid Karyawan k, 
             BindingResult errors, 
-            SessionStatus status){
+            SessionStatus status,
+            @RequestParam("foto") MultipartFile foto) throws Exception {
         System.out.println("NIP : "+k.getNip());
         System.out.println("Nama : "+k.getNama());
         System.out.println("Email : "+k.getEmail());
@@ -65,6 +69,17 @@ public class AbsenController {
             }
             return "karyawan/form";
         }
+        
+        System.out.println("Nama file : "+foto.getName());
+        System.out.println("Nama asli file : "+foto.getOriginalFilename());
+        System.out.println("Ukuran : "+foto.getSize());
+        
+        // simpan file
+        String tempFolder = System.getProperty("java.io.tmpdir");
+        String tujuan = tempFolder + File.separator + foto.getOriginalFilename();
+        foto.transferTo(new File(tujuan));
+        
+        System.out.println("Foto telah disimpan di "+tujuan);
         
         status.setComplete();
         return "redirect:list";

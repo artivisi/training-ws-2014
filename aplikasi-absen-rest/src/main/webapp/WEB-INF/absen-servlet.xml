@@ -28,5 +28,13 @@
             </list>
         </property>
     </bean>
+    
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+        <!-- max upload size 10MB -->
+        <property name="maxUploadSize" value="10000000"/>
+
+    </bean>
 
 </beans>

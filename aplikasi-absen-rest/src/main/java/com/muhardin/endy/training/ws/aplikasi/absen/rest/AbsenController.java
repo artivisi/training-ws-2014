@@ -35,17 +35,29 @@ public class AbsenController {
     }
     
     @RequestMapping("/karyawan/info")
-    public ModelMap infoKaryawan(){
+    public ModelMap infoKaryawan(@RequestParam Integer nip){
         ModelMap mm = new ModelMap();
-        mm.addAttribute("karyawan", absenService.cariByNip(999));
+        mm.addAttribute("karyawan", absenService.cariByNip(nip));
         return mm;
     }
     
     @RequestMapping("/karyawan/list")
-    public ModelMap daftarKaryawan(){
+    public ModelMap daftarKaryawan(
+            @RequestParam(required = false)Integer start,
+            @RequestParam(required = false)Integer rows
+            ){
+        
+        if(start == null){
+            start = 0;
+        }
+        
+        if(rows == null){
+            rows = 10;
+        }
+        
         ModelMap mm = new ModelMap();
         mm.addAttribute("screenAktif", "karyawan");
-        mm.addAttribute("daftarKaryawan", absenService.cariByNama("100"));
+        mm.addAttribute("daftarKaryawan", absenService.semuaKaryawan(start, rows));
         return mm;
     }
     

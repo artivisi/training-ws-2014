@@ -50,4 +50,17 @@ public class AbsenServiceTest {
         assertTrue(rs.next());
         assertEquals(Long.valueOf(2), Long.valueOf(rs.getLong(1)));
     }
+    
+    @Test
+    public void testCariByNip(){
+        // test query yang ada di sample data
+        Karyawan k1 = absenService.cariByNip(999);
+        
+        assertNotNull(k1); // harusnya gak null
+        assertEquals("sholihin", k1.getNama()); // cek datanya
+        assertTrue(k1.getTelp().size() == 2); // cek relasi ke tabel lain
+        
+        // test query data yang tidak ada
+        assertNull(absenService.cariByNip(888));
+    }
 }

@@ -2,6 +2,7 @@ package com.muhardin.endy.training.ws.aplikasi.absen.service;
 
 import com.muhardin.endy.training.ws.aplikasi.absen.Karyawan;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,11 @@ public class AbsenServiceImpl implements AbsenService {
     }
     
     public Karyawan cariByNip(Integer nip){
-        return (Karyawan) sessionFactory.getCurrentSession().get(Karyawan.class, nip);
+        Karyawan k = (Karyawan) sessionFactory.getCurrentSession().get(Karyawan.class, nip);
+        if(k != null){
+            Hibernate.initialize(k.getTelp());
+        }
+        return k;
     }
     
     public List<Karyawan> cariByNama(String nama){

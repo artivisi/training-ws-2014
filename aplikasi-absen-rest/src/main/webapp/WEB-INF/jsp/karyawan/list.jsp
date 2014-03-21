@@ -36,7 +36,7 @@
                         <th>Email</th>
                         <th>Tanggal Lahir</th>
                         <th>Telp</th>
-                        <th>Action</th>
+                        <th><a href="form" class="btn btn-default"><span class="glyphicon glyphicon-asterisk"></span>&nbsp;Data Baru</a></th>
                     </tr>
                 </thead>
                 <tbody>

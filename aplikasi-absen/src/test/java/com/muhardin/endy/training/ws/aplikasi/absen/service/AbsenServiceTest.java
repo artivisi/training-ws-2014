@@ -5,6 +5,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Date;
 import javax.sql.DataSource;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 @ContextConfiguration(locations = "classpath:absen-ctx.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,6 +25,13 @@ public class AbsenServiceTest {
     @Autowired private AbsenService absenService;
     @Autowired private DataSource dataSource;
     
+    @Before
+    public void resetIsiDatabase() throws Exception {
+        Connection connection = dataSource.getConnection();
+        DatabaseOperation.CLEAN_INSERT.execute(new DatabaseConnection(connection), 
+                new FlatXmlDataSetBuilder()
+                        .build(this.getClass().getResourceAsStream("/karyawan.xml")));
+    }
     
     @Test
     public void testSimpan() throws Exception {
@@ -36,6 +48,6 @@ public class AbsenServiceTest {
         Connection conn = dataSource.getConnection();
         ResultSet rs = conn.createStatement().executeQuery("select count(*) from m_karyawan");
         assertTrue(rs.next());
-        assertEquals(Long.valueOf(1), Long.valueOf(rs.getLong(1)));
+        assertEquals(Long.valueOf(2), Long.valueOf(rs.getLong(1)));
     }
 }

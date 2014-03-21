@@ -3,7 +3,10 @@
     
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/absen-security.xml</param-value>
+        <param-value>
+            classpath:absen-ctx.xml
+            /WEB-INF/absen-security.xml
+        </param-value>
     </context-param>
 
     <listener>

@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class AbsenController {
     
+    @Autowired
     private AbsenService absenService;
     
     @InitBinder
@@ -35,7 +37,7 @@ public class AbsenController {
     @RequestMapping("/karyawan/info")
     public ModelMap infoKaryawan(){
         ModelMap mm = new ModelMap();
-        mm.addAttribute("karyawan", absenService.cariByNip(100));
+        mm.addAttribute("karyawan", absenService.cariByNip(999));
         return mm;
     }
     

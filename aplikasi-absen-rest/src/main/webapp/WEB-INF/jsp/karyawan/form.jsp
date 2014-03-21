@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -30,7 +31,7 @@
                     <div class="form-group <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
                         <label for="nip" class="col-sm-2 control-label">NIP</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="nip" name="nip" placeholder="NIP">
+                            <input type="text" class="form-control" id="nip" name="nip" placeholder="NIP" value="${karyawan.nip}">
                             <c:if test="${status.error}">
                                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                             </c:if>
@@ -44,7 +45,7 @@
                     <div class="form-group <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
                         <label for="nama" class="col-sm-2 control-label">Nama</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="${karyawan.nama}">
                             <c:if test="${status.error}">
                                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                             </c:if>
@@ -58,7 +59,7 @@
                     <div class="form-group <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
                         <label for="email" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="${karyawan.email}">
                             <c:if test="${status.error}">
                                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                             </c:if>
@@ -72,7 +73,7 @@
                     <div class="form-group <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
                         <label for="tanggalLahir" class="col-sm-2 control-label">Tanggal Lahir</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="tanggalLahir" name="tanggalLahir" placeholder="dd-MM-yyyy">
+                            <input type="text" class="form-control" id="tanggalLahir" name="tanggalLahir" placeholder="dd-MM-yyyy"  value="<fmt:formatDate value="${karyawan.tanggalLahir}" type="date" pattern="dd-MM-yyyy" />">
                             <c:if test="${status.error}">
                                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                             </c:if>

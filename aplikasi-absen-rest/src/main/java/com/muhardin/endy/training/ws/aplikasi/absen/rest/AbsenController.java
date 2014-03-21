@@ -62,8 +62,18 @@ public class AbsenController {
     }
     
     @RequestMapping(value="/karyawan/form", method = RequestMethod.GET)
-    public ModelMap displayFormEditKaryawan(){
-        return new ModelMap("karyawan", new Karyawan());
+    public ModelMap displayFormEditKaryawan(@RequestParam(required = false) Integer nip){
+        Karyawan k = null;
+        
+        if(nip != null){
+            k = absenService.cariByNip(nip);
+        }
+        
+        if(k == null){
+            k = new Karyawan();
+        }
+        
+        return new ModelMap("karyawan", k);
     }
     
     @RequestMapping(value="/karyawan/form", method = RequestMethod.POST)
@@ -94,6 +104,8 @@ public class AbsenController {
         foto.transferTo(new File(tujuan));
         
         System.out.println("Foto telah disimpan di "+tujuan);
+        
+        absenService.simpan(k);
         
         status.setComplete();
         return "redirect:list";

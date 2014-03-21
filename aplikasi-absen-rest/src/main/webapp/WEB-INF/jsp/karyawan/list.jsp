@@ -36,6 +36,7 @@
                         <th>Email</th>
                         <th>Tanggal Lahir</th>
                         <th>Telp</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,6 +52,10 @@
                                     </c:forEach>
                                 </ul>
                                 
+                            </td>
+                            <td>
+                                <a href="info?nip=${k.nip}" class="btn btn-default">lihat</a>
+                                <a href="form?nip=${k.nip}" class="btn btn-default">edit</a>
                             </td>
                         </tr>
                     </c:forEach>

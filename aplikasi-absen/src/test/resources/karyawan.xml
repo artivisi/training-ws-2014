@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <m_karyawan 
+        nip="999"
+        nama="sholihin"
+        email="sholihin@gmail.com"
+        tanggal_lahir="2010-10-30"
+    />
+    <m_karyawan_telp 
+        nip_karyawan="999"
+        nomer_telepon="1234567890"
+    />
+    <m_karyawan_telp 
+        nip_karyawan="999"
+        nomer_telepon="0987654321"
+    />
+</dataset>

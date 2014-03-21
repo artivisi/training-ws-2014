@@ -4,9 +4,9 @@ import com.muhardin.endy.training.ws.aplikasi.absen.Karyawan;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Date;
+import java.util.List;
 import javax.sql.DataSource;
 import org.dbunit.database.DatabaseConnection;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Test;
@@ -62,5 +62,16 @@ public class AbsenServiceTest {
         
         // test query data yang tidak ada
         assertNull(absenService.cariByNip(888));
+    }
+    
+    @Test
+    public void testCariByNama(){
+        List<Karyawan> hasil = absenService.cariByNama("shol");
+        assertNotNull(hasil);
+        assertFalse(hasil.isEmpty());
+        
+        List<Karyawan> hasil2 = absenService.cariByNama("endy");
+        assertNotNull(hasil2);
+        assertTrue(hasil2.isEmpty());
     }
 }

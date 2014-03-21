@@ -54,8 +54,8 @@
                                 
                             </td>
                             <td>
-                                <a href="info?nip=${k.nip}" class="btn btn-default">lihat</a>
-                                <a href="form?nip=${k.nip}" class="btn btn-default">edit</a>
+                                <a href="info?nip=${k.nip}" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbsp;lihat</a>
+                                <a href="form?nip=${k.nip}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>&nbsp;edit</a>
                             </td>
                         </tr>
                     </c:forEach>

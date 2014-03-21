@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class AbsenController {
     
-    private AbsenService absenService = new AbsenService();
+    private AbsenService absenService;
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

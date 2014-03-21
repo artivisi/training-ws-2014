@@ -13,7 +13,7 @@ import javax.jws.WebParam;
  */
 @WebService(serviceName = "AbsenWS")
 public class AbsenWS {
-    private AbsenService absenService = new AbsenService();
+    private AbsenService absenService;
 
     /**
      * This is a sample web service operation

@@ -7,4 +7,5 @@ public interface AbsenService {
     public void simpan(Karyawan k);
     public Karyawan cariByNip(Integer nip);
     public List<Karyawan> cariByNama(String nama);
+    public List<Karyawan> semuaKaryawan(Integer start, Integer rows);
 }

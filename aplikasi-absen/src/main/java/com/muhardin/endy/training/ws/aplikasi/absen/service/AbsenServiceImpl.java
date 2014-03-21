@@ -20,6 +20,20 @@ public class AbsenServiceImpl implements AbsenService {
         sessionFactory.getCurrentSession().saveOrUpdate(k);
     }
     
+    @Override
+    public List<Karyawan> semuaKaryawan(Integer start, Integer rows){
+        List<Karyawan> hasil = sessionFactory.getCurrentSession()
+                .createQuery("select k from Karyawan k order by k.nip")
+                .setFirstResult(start)
+                .setMaxResults(rows)
+                .list();
+        for (Karyawan karyawan : hasil) {
+            Hibernate.initialize(karyawan.getTelp());
+        }
+        return hasil;
+    }
+    
+    @Override
     public Karyawan cariByNip(Integer nip){
         Karyawan k = (Karyawan) sessionFactory.getCurrentSession().get(Karyawan.class, nip);
         if(k != null){
@@ -28,6 +42,7 @@ public class AbsenServiceImpl implements AbsenService {
         return k;
     }
     
+    @Override
     public List<Karyawan> cariByNama(String nama){
         return sessionFactory.getCurrentSession()
                 .createQuery("select k from Karyawan k where k.nama like :nama ")

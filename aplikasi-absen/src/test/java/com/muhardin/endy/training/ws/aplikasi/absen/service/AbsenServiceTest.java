@@ -74,4 +74,11 @@ public class AbsenServiceTest {
         assertNotNull(hasil2);
         assertTrue(hasil2.isEmpty());
     }
+    
+    @Test
+    public void testCariSemua(){
+        List<Karyawan> hasil = absenService.semuaKaryawan(0, 1000);
+        assertNotNull(hasil);
+        assertFalse(hasil.isEmpty());
+    }
 }

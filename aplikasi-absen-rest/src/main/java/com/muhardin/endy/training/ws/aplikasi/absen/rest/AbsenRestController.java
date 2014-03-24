@@ -49,4 +49,22 @@ public class AbsenRestController {
     public void simpan(@RequestBody @Valid Karyawan k){
         absenService.simpan(k);
     }
+    
+    @RequestMapping(value="/rest/karyawan/{nip}", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@PathVariable Integer nip, @RequestBody @Valid Karyawan k){
+        Karyawan kx = absenService.cariByNip(nip);
+        if(kx != null) {
+            absenService.simpan(k);
+        }
+    }
+    
+    @RequestMapping(value="/rest/karyawan/{nip}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
+    public void hapus(@PathVariable Integer nip){
+        Karyawan kx = absenService.cariByNip(nip);
+        if(kx != null) {
+            absenService.hapusKaryawan(nip);
+        }
+    }
 }

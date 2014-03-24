@@ -80,12 +80,19 @@ public class AbsenController {
     public String prosesFormKaryawan(@ModelAttribute @Valid Karyawan k, 
             BindingResult errors, 
             SessionStatus status,
-            @RequestParam("foto") MultipartFile foto) throws Exception {
+            @RequestParam("fileFoto") MultipartFile foto) throws Exception {
         System.out.println("NIP : "+k.getNip());
         System.out.println("Nama : "+k.getNama());
         System.out.println("Email : "+k.getEmail());
         System.out.println("Tanggal Lahir : "+k.getTanggalLahir());
         
+        // validasi foto kosong
+        if(foto.isEmpty()){
+            errors.rejectValue("foto", "foto.kosong");
+            return "karyawan/form";
+        }
+        
+        // kalau ada error, jangan dilanjutkan
         if(errors.hasErrors()) {
             List<FieldError> daftarError = errors.getFieldErrors();
             for (FieldError fieldError : daftarError) {

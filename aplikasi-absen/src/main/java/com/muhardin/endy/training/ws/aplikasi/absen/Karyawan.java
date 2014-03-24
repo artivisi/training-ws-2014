@@ -45,6 +45,8 @@ public class Karyawan {
     
     private Boolean aktif;
     
+    private String foto;
+    
     // getter setter generate dengan Netbeans 
     
     public Integer getNip() {
@@ -94,5 +96,12 @@ public class Karyawan {
     public void setAktif(Boolean aktif) {
         this.aktif = aktif;
     }
-    
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 }

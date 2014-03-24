@@ -83,12 +83,20 @@
                         </c:if>
                     </div>
                 </s:bind>
-                <div class="form-group">
-                    <label for="foto" class="col-sm-2 control-label">Foto</label>
-                    <div class="col-sm-6">
-                        <input type="file" class="form-control" id="foto" name="foto" placeholder="Upload Foto Anda">
+                <s:bind path="karyawan.foto">
+                    <div class="form-group  <c:out value=" ${status.error ? 'has-error has-feedback' : '' }" />">
+                        <label for="fileFoto" class="col-sm-2 control-label">Foto</label>
+                        <div class="col-sm-6">
+                            <input type="file" class="form-control" id="fileFoto" name="fileFoto" placeholder="Upload Foto Anda">
+                            <c:if test="${status.error}">
+                                <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                            </c:if>
+                        </div>
+                        <c:if test="${status.error}">
+                            <span class="help-block">${status.errorMessage}</span>
+                        </c:if>
                     </div>
-                </div>
+                </s:bind>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-6">
                         <button type="submit" class="btn btn-primary">Simpan</button>

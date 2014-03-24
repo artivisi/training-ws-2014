@@ -15,9 +15,19 @@ public class AbsenServiceImpl implements AbsenService {
     @Autowired
     private SessionFactory sessionFactory;
     
+    @Override
     @Transactional(readOnly = false)
     public void simpan(Karyawan k){
         sessionFactory.getCurrentSession().saveOrUpdate(k);
+    }
+    
+    @Override
+    @Transactional(readOnly = false)
+    public void hapusKaryawan(Integer nip){
+        Karyawan k = (Karyawan) sessionFactory.getCurrentSession().load(Karyawan.class, nip);
+        if(k != null){
+            sessionFactory.getCurrentSession().delete(k);
+        }
     }
     
     @Override

@@ -8,4 +8,6 @@ public interface AbsenService {
     public Karyawan cariByNip(Integer nip);
     public List<Karyawan> cariByNama(String nama);
     public List<Karyawan> semuaKaryawan(Integer start, Integer rows);
+
+    public void hapusKaryawan(Integer nip);
 }

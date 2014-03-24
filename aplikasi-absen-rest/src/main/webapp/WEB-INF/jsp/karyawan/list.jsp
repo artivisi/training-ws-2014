@@ -56,6 +56,12 @@
                             <td>
                                 <a href="info?nip=${k.nip}" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>&nbsp;lihat</a>
                                 <a href="form?nip=${k.nip}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>&nbsp;edit</a>
+                                <form action="hapus" method="post">
+                                    <input type="hidden" name="nip" value="${k.nip}" />
+                                    <button type="submit"class="btn btn-default">
+                                        <span class="glyphicon glyphicon-remove"></span> hapus
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

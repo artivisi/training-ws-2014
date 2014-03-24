@@ -117,4 +117,10 @@ public class AbsenController {
         status.setComplete();
         return "redirect:list";
     }
+    
+    @RequestMapping("/karyawan/hapus")
+    public String hapus(@RequestParam Integer nip){
+        absenService.hapusKaryawan(nip);
+        return "redirect:list";
+    }
 }

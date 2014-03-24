@@ -25,10 +25,10 @@ public class AbsenExceptionHandler {
     @ExceptionHandler(DataSudahAdaException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
-    public Map<String, Object> handleDataSudahAda(){
+    public Map<String, Object> handleDataSudahAda(DataSudahAdaException err){
         Map<String, Object> hasil = new LinkedHashMap<>();
         hasil.put("success", false);
-        hasil.put("keterangan", "Data sudah ada dalam database");
+        hasil.put("keterangan", err.getMessage());
         return hasil;
     }
 }

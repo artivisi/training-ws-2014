@@ -56,7 +56,7 @@ public class AbsenRestController {
     public void simpan(@RequestBody @Valid Karyawan k) {
         Karyawan kx = absenService.cariByNip(k.getNip());
         if(kx != null){
-            throw new DataSudahAdaException();
+            throw new DataSudahAdaException("NIP "+k.getNip()+" sudah ada dalam database");
         }
         absenService.simpan(k);
     }

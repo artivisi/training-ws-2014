@@ -1,6 +1,7 @@
 package com.muhardin.endy.training.ws.aplikasi.absen.rest.client;
 
 import com.muhardin.endy.training.ws.aplikasi.absen.Karyawan;
+import com.muhardin.endy.training.ws.aplikasi.absen.exception.DataTidakDitemukanException;
 import java.util.Date;
 import java.util.List;
 import org.junit.Test;
@@ -27,8 +28,8 @@ public class AbsenRestClientTest {
         }
     }
     
-    //@Test
-    public void testSimpanBaru(){
+    @Test
+    public void testSimpanDanHapus(){
         Karyawan kx = new Karyawan();
         kx.setNip(777);
         kx.setNama("Dadang");
@@ -41,6 +42,17 @@ public class AbsenRestClientTest {
         Karyawan k = absenRestClient.cariKaryawanByNip(777);
         assertNotNull(k);
         displayKaryawan(k);
+        
+        absenRestClient.delete(k);
+        
+        try {
+            absenRestClient.cariKaryawanByNip(777);
+            fail("Seharusnya throw DataTidakDitemukanException");
+        } catch (DataTidakDitemukanException err){
+            // memang seharusnya
+        } catch (Exception err){
+            fail("Salah jenis exception : "+err.getClass().getName());   
+        }
     }
     
     @Test

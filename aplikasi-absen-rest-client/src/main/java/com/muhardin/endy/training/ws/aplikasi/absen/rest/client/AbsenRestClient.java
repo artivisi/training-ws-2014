@@ -9,6 +9,7 @@ package com.muhardin.endy.training.ws.aplikasi.absen.rest.client;
 import com.muhardin.endy.training.ws.aplikasi.absen.Karyawan;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -55,5 +56,14 @@ public class AbsenRestClient {
     public void update(Karyawan k){
         String url = SERVER_URL + "/karyawan/{nip}";
         restTemplate.put(url, k, k.getNip());
+    }
+    
+    public void delete(Karyawan k){
+        String url = SERVER_URL + "/karyawan/{nip}";
+        
+        Map<String, Object> pathVariable = new HashMap<>();
+        pathVariable.put("nip", k.getNip());
+        
+        restTemplate.delete(url, pathVariable);
     }
 }

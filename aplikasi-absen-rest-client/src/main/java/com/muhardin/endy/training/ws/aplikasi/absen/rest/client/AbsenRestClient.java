@@ -55,11 +55,7 @@ public class AbsenRestClient {
             
             restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory(client));
             restTemplate.setErrorHandler(new AbsenRestClientErrorHandler());
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(AbsenRestClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (KeyStoreException ex) {
-            Logger.getLogger(AbsenRestClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (KeyManagementException ex) {
+        } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException ex) {
             Logger.getLogger(AbsenRestClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

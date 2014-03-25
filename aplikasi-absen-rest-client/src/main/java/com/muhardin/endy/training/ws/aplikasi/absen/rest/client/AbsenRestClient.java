@@ -7,6 +7,10 @@
 package com.muhardin.endy.training.ws.aplikasi.absen.rest.client;
 
 import java.util.HashMap;
+import java.util.List;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -14,18 +18,40 @@ import org.springframework.web.client.RestTemplate;
  * @author endy
  */
 public class AbsenRestClient {
-    private RestTemplate restTemplate = new RestTemplate();
+    private static final String SERVER_URL = "http://localhost:8080/aplikasi-absen-rest/api/rest";
+    private final RestTemplate restTemplate = new RestTemplate();
     
     public Karyawan cariKaryawanByNip(Integer nip){
-        String url = "http://localhost:8080/aplikasi-absen-rest/api/rest/karyawan/"+nip;
+        String url = SERVER_URL+"/karyawan/"+nip;
         Karyawan k = restTemplate
                 .getForObject(url, Karyawan.class, new HashMap<Object, Object>());
         return k;
     }
     
+    public List<Karyawan> semuaKaryawan(){
+        ParameterizedTypeReference<List<Karyawan>> typeRef 
+                = new ParameterizedTypeReference<List<Karyawan>>() {};
+        
+        ResponseEntity<List<Karyawan>> response = restTemplate
+         .exchange(SERVER_URL+"/karyawan/", 
+                 HttpMethod.GET, null, 
+                 typeRef);
+        
+        return response.getBody();
+    }
+    
     public static void main(String[] args) {
         AbsenRestClient arc = new AbsenRestClient();
         Karyawan k = arc.cariKaryawanByNip(999);
+        displayKaryawan(k);
+        
+        List<Karyawan> semua = arc.semuaKaryawan();
+        for (Karyawan karyawan : semua) {
+            displayKaryawan(karyawan);
+        }
+    }
+
+    private static void displayKaryawan(Karyawan k) {
         System.out.println("NIP : "+ k.getNip());
         System.out.println("Nama : "+ k.getNama());
         System.out.println("Tanggal Lahir : "+ k.getTanggalLahir());

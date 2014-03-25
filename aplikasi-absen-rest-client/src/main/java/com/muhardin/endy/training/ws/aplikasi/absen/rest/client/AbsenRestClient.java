@@ -21,6 +21,10 @@ import org.springframework.web.client.RestTemplate;
 public class AbsenRestClient {
     private static final String SERVER_URL = "http://localhost:8080/aplikasi-absen-rest/api/rest";
     private final RestTemplate restTemplate = new RestTemplate();
+
+    public AbsenRestClient() {
+        restTemplate.setErrorHandler(new AbsenRestClientErrorHandler());
+    }
     
     public Karyawan cariKaryawanByNip(Integer nip){
         String url = SERVER_URL+"/karyawan/"+nip;
@@ -37,6 +41,8 @@ public class AbsenRestClient {
          .exchange(SERVER_URL+"/karyawan/", 
                  HttpMethod.GET, null, 
                  typeRef);
+        
+        System.out.println("Response Status : "+response.getStatusCode());
         
         return response.getBody();
     }    

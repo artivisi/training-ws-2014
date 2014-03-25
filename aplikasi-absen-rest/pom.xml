@@ -79,7 +79,7 @@
                 </executions>
                 <configuration>
                     <keystore>${project.build.directory}/tomcat-keystore.jks</keystore>
-                    <dname>cn=com.muhardin.endy</dname>
+                    <dname>cn=localhost</dname>
                     <keypass>tomcat</keypass>
                     <storepass>tomcat</storepass>
                     <alias>tomcat</alias>

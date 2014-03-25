@@ -6,13 +6,21 @@
 package com.muhardin.endy.training.ws.aplikasi.absen.rest.client;
 
 import com.muhardin.endy.training.ws.aplikasi.absen.Karyawan;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContextBuilder;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.core.ParameterizedTypeReference;
@@ -27,17 +35,33 @@ import org.springframework.web.client.RestTemplate;
  */
 public class AbsenRestClient {
 
-    private static final String SERVER_URL = "http://localhost:8080/aplikasi-absen-rest/api/rest";
-    private final RestTemplate restTemplate;
+    private static final String SERVER_URL = "https://localhost:8443/aplikasi-absen-rest/api/rest";
+    private RestTemplate restTemplate = null;
 
     public AbsenRestClient() {
-        CredentialsProvider provider = new BasicCredentialsProvider();
-        UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("endy", "123");
-        provider.setCredentials(AuthScope.ANY, credentials);
-        HttpClient client = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build();
-
-        restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory(client));
-        restTemplate.setErrorHandler(new AbsenRestClientErrorHandler());
+        try {
+            SSLContextBuilder builder = new SSLContextBuilder();
+            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                    builder.build());
+            
+            CredentialsProvider provider = new BasicCredentialsProvider();
+            UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("endy", "123");
+            provider.setCredentials(AuthScope.ANY, credentials);
+            HttpClient client = HttpClientBuilder.create()
+                    .setDefaultCredentialsProvider(provider)
+                    .setSSLSocketFactory(sslsf)
+                    .build();
+            
+            restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory(client));
+            restTemplate.setErrorHandler(new AbsenRestClientErrorHandler());
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AbsenRestClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (KeyStoreException ex) {
+            Logger.getLogger(AbsenRestClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (KeyManagementException ex) {
+            Logger.getLogger(AbsenRestClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Karyawan cariKaryawanByNip(Integer nip) {

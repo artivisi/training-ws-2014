@@ -6,12 +6,13 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
     
-    <http pattern="/api/rest/**" create-session="stateless">
+    <http pattern="/api/rest/**" create-session="stateless" >
         <intercept-url pattern="/api/rest/karyawan/" method="GET" access="ROLE_USER" />
         <intercept-url pattern="/api/rest/karyawan/" method="POST" access="ROLE_ADMIN" />
         <intercept-url pattern="/api/rest/karyawan/*" method="GET" access="ROLE_USER" />
         <intercept-url pattern="/api/rest/karyawan/*" method="PUT" access="ROLE_ADMIN" />
         <intercept-url pattern="/api/rest/karyawan/*" method="DELETE" access="ROLE_ADMIN" />
+        <intercept-url pattern="/api/rest/**" requires-channel="https" />
         <http-basic/>
     </http>
     

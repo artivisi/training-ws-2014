@@ -6,6 +6,7 @@
 
 package com.muhardin.endy.training.ws.aplikasi.absen.rest.client;
 
+import com.muhardin.endy.training.ws.aplikasi.absen.Karyawan;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.core.ParameterizedTypeReference;

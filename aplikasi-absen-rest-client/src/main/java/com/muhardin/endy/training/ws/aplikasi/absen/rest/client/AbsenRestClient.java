@@ -40,4 +40,9 @@ public class AbsenRestClient {
         
         return response.getBody();
     }    
+
+    public void simpan(Karyawan k) {
+        String url = SERVER_URL + "/karyawan/";
+        restTemplate.postForObject(url, k, Object.class);
+    }
 }

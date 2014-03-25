@@ -1,6 +1,7 @@
 package com.muhardin.endy.training.ws.aplikasi.absen.rest.client;
 
 import com.muhardin.endy.training.ws.aplikasi.absen.Karyawan;
+import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,6 +25,22 @@ public class AbsenRestClientTest {
         for (Karyawan karyawan : semua) {
             displayKaryawan(karyawan);
         }
+    }
+    
+    @Test
+    public void testSimpanBaru(){
+        Karyawan kx = new Karyawan();
+        kx.setNip(777);
+        kx.setNama("Dadang");
+        kx.setEmail("dadang@artivisi.com");
+        kx.setTanggalLahir(new Date());
+        kx.setAktif(true);
+        
+        absenRestClient.simpan(kx);
+        
+        Karyawan k = absenRestClient.cariKaryawanByNip(777);
+        assertNotNull(k);
+        displayKaryawan(k);
     }
 
     private void displayKaryawan(Karyawan k) {

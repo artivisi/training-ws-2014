@@ -67,9 +67,34 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>keytool-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>genkey</id>
+                        <goals>
+                            <goal>genkey</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <keystore>${project.build.directory}/tomcat-keystore.jks</keystore>
+                    <dname>cn=com.muhardin.endy</dname>
+                    <keypass>tomcat</keypass>
+                    <storepass>tomcat</storepass>
+                    <alias>tomcat</alias>
+                    <keyalg>RSA</keyalg>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
+                <configuration>
+                    <httpsPort>8443</httpsPort>
+                    <keystoreFile>${project.build.directory}/tomcat-keystore.jks</keystoreFile>
+                    <keystorePass>tomcat</keystorePass>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

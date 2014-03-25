@@ -39,22 +39,5 @@ public class AbsenRestClient {
                  typeRef);
         
         return response.getBody();
-    }
-    
-    public static void main(String[] args) {
-        AbsenRestClient arc = new AbsenRestClient();
-        Karyawan k = arc.cariKaryawanByNip(999);
-        displayKaryawan(k);
-        
-        List<Karyawan> semua = arc.semuaKaryawan();
-        for (Karyawan karyawan : semua) {
-            displayKaryawan(karyawan);
-        }
-    }
-
-    private static void displayKaryawan(Karyawan k) {
-        System.out.println("NIP : "+ k.getNip());
-        System.out.println("Nama : "+ k.getNama());
-        System.out.println("Tanggal Lahir : "+ k.getTanggalLahir());
-    }
+    }    
 }

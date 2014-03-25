@@ -51,4 +51,9 @@ public class AbsenRestClient {
         String url = SERVER_URL + "/karyawan/";
         restTemplate.postForObject(url, k, Object.class);
     }
+    
+    public void update(Karyawan k){
+        String url = SERVER_URL + "/karyawan/{nip}";
+        restTemplate.put(url, k, k.getNip());
+    }
 }

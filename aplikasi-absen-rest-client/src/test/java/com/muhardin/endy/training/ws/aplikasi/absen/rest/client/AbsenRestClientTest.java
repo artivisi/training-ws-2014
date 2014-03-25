@@ -27,7 +27,7 @@ public class AbsenRestClientTest {
         }
     }
     
-    @Test
+    //@Test
     public void testSimpanBaru(){
         Karyawan kx = new Karyawan();
         kx.setNip(777);
@@ -41,6 +41,19 @@ public class AbsenRestClientTest {
         Karyawan k = absenRestClient.cariKaryawanByNip(777);
         assertNotNull(k);
         displayKaryawan(k);
+    }
+    
+    @Test
+    public void testUpdate(){
+        Karyawan k = absenRestClient.cariKaryawanByNip(999);
+        assertNotNull(k);
+        
+        k.setNama("Mohammad Sholihin");
+        absenRestClient.update(k);
+        
+        Karyawan kx = absenRestClient.cariKaryawanByNip(999);
+        assertNotNull(kx);
+        assertEquals("Mohammad Sholihin", kx.getNama());
     }
 
     private void displayKaryawan(Karyawan k) {

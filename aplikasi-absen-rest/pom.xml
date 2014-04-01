@@ -69,12 +69,13 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>keytool-maven-plugin</artifactId>
+                <version>1.4</version>
                 <executions>
                     <execution>
-                        <id>genkey</id>
                         <goals>
-                            <goal>genkey</goal>
+                            <goal>generateKeyPair</goal>
                         </goals>
+                        <phase>prepare-package</phase>
                     </execution>
                 </executions>
                 <configuration>

@@ -3,3 +3,6 @@ target
 
 # Netbeans Ignore
 nb-configuration.xml
+
+# Hasil Upload
+aplikasi-storage-server/src/main/webapp/data

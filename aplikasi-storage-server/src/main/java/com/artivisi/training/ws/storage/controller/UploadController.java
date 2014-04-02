@@ -1,14 +1,17 @@
 package com.artivisi.training.ws.storage.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UploadController {
     
     private final SecureRandom random = new SecureRandom();
+    private static final String folderUpload = "/data";
 
     @RequestMapping(value = "/upload/", method = RequestMethod.POST)
     public ResponseEntity<String> generateUploadId(
@@ -49,8 +53,10 @@ public class UploadController {
     @RequestMapping(value = "/upload/", method = RequestMethod.PUT)
     public ResponseEntity<String> upload(@RequestParam("upload_id") String id, 
             @RequestHeader("Content-Length") Long contentLength, 
-            @RequestHeader("Content-Range") String contentRange
-            ){
+            @RequestHeader("Content-Range") String contentRange,
+            @RequestBody(required = false) String data, // file binary diencode dengan Base64
+            HttpServletRequest request
+            ) throws IOException{
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Range", "0-1000");
 
@@ -78,6 +84,22 @@ public class UploadController {
         System.out.println("Client upload end at byte : "+end);
         System.out.println("Client upload size : "+contentLength);
         System.out.println("Client upload total size : "+partTotal[1]);
+        
+        String fileTujuan = request.getServletContext()
+                .getRealPath(folderUpload)
+                + File.separator + id
+                + File.separator + "output.jpg";
+        
+        if(data != null && data.trim().length() > 0){
+            System.out.println("Data size : "+data.length());
+            
+            // konversi balik (decode) dari String ke byte[] dengan Base64
+            byte[] hasil = DatatypeConverter.parseBase64Binary(data);
+            
+            File tujuan = new File(fileTujuan);
+            FileUtils.writeByteArrayToFile(tujuan, hasil);
+            System.out.println("Menulis hasil upload ke "+fileTujuan);
+        }
         
         ResponseEntity<String> response = new ResponseEntity<String>(null, 
                 responseHeaders, HttpStatus.RESUME_INCOMPLETE);

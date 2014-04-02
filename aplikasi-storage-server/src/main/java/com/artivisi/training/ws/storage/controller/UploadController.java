@@ -1,10 +1,12 @@
 package com.artivisi.training.ws.storage.controller;
 
+import com.artivisi.training.ws.domain.InfoFile;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.io.FileUtils;
@@ -23,23 +25,40 @@ public class UploadController {
     
     private final SecureRandom random = new SecureRandom();
     private static final String folderUpload = "/data";
+    
+    private final Map<String, InfoFile> databaseInfoFile 
+            = new ConcurrentHashMap<String, InfoFile>();
 
     @RequestMapping(value = "/upload/", method = RequestMethod.POST)
     public ResponseEntity<String> generateUploadId(
-            @RequestBody(required = false) Map<String, String> metadata, 
+            @RequestBody Map<String, String> metadata, 
             HttpServletRequest request
             ) {
+        
         // tampilkan metadata
-        if(metadata != null){
-            System.out.println("==== Metadata Start ====");
-            for (String key : metadata.keySet()) {
-                System.out.println(key + " => " + metadata.get(key));
-            }
-            System.out.println("==== Metadata End ====");
+        System.out.println("==== Metadata Start ====");
+        for (String key : metadata.keySet()) {
+            System.out.println(key + " => " + metadata.get(key));
         }
+        System.out.println("==== Metadata End ====");
+        
+        // ambil nama file dan content type
+        if(metadata.get("nama") == null){
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+        
+        if(metadata.get("Content-Type") == null){
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+        
+        InfoFile info = new InfoFile();
+        info.setNama(metadata.get("nama"));
+        info.setContentType(metadata.get("Content-Type"));
         
         String uploadId = new BigInteger(130, random).toString(32);
         System.out.println("Generate random upload id : "+uploadId);
+        
+        databaseInfoFile.put(uploadId, info);
         
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Location", request.getRequestURL()+"?upload_id="+uploadId);
@@ -66,15 +85,11 @@ public class UploadController {
         // parsing content range
         String[] partTotal = contentRange.split("/");
         if(partTotal.length != 2){
-            ResponseEntity<String> response = new ResponseEntity<String>(null, 
-                responseHeaders, HttpStatus.BAD_REQUEST);
-            return response;
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
         String[] startEnd = partTotal[0].split("-");
         if(startEnd.length != 2){
-            ResponseEntity<String> response = new ResponseEntity<String>(null, 
-                responseHeaders, HttpStatus.BAD_REQUEST);
-            return response;
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
         
         Long start = Long.valueOf(startEnd[0]);
@@ -85,10 +100,15 @@ public class UploadController {
         System.out.println("Client upload size : "+contentLength);
         System.out.println("Client upload total size : "+partTotal[1]);
         
+        InfoFile info = databaseInfoFile.get(id);
+        if(info == null){
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+        
         String fileTujuan = request.getServletContext()
                 .getRealPath(folderUpload)
                 + File.separator + id
-                + File.separator + "output.jpg";
+                + File.separator + info.getNama();
         
         if(data != null && data.trim().length() > 0){
             System.out.println("Data size : "+data.length());

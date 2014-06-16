@@ -5,4 +5,4 @@ target
 nb-configuration.xml
 
 # Hasil Upload
-aplikasi-storage-server/src/main/webapp/data
+aplikasi-storage-server/src/main/webapp/upload

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class UploadController {
             = new ConcurrentHashMap<String, InfoFile>();
 
     @RequestMapping(value = "/upload/", method = RequestMethod.POST)
-    public ResponseEntity<String> generateUploadId(
+    public ResponseEntity<Object> generateUploadId(
             @RequestBody Map<String, String> metadata, 
             HttpServletRequest request
             ) {
@@ -43,17 +44,25 @@ public class UploadController {
         }
         System.out.println("==== Metadata End ====");
         
+        Map<String, Object> responseBody = new HashMap<String, Object>();
+        
         // ambil nama file dan content type
         if(metadata.get("nama") == null){
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            responseBody.put("success", false);
+            responseBody.put("message", "nama harus diisi");
+            return new ResponseEntity<Object>(responseBody, HttpStatus.BAD_REQUEST);
         }
         
         if(metadata.get("Content-Type") == null){
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            responseBody.put("success", false);
+            responseBody.put("message", "Content-Type harus diisi");
+            return new ResponseEntity<Object>(responseBody,HttpStatus.BAD_REQUEST);
         }
         
         if(metadata.get("sha1Sum") == null){
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            responseBody.put("success", false);
+            responseBody.put("message", "sha1Sum harus diisi");
+            return new ResponseEntity<Object>(responseBody, HttpStatus.BAD_REQUEST);
         }
         
         InfoFile info = new InfoFile();
@@ -69,33 +78,41 @@ public class UploadController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Location", request.getRequestURL()+"?upload_id="+uploadId);
 
-        ResponseEntity<String> response = new ResponseEntity<String>(null, responseHeaders, HttpStatus.OK);
+        responseBody.put("success", true);
+        responseBody.put("upload_id", uploadId);
+        responseBody.put("upload_url", request.getRequestURL()+"?upload_id="+uploadId);
+        ResponseEntity<Object> response = new ResponseEntity<Object>(responseBody, responseHeaders, HttpStatus.OK);
         return response;
 
     }
     
     
     @RequestMapping(value = "/upload/", method = RequestMethod.PUT)
-    public ResponseEntity<String> upload(@RequestParam("upload_id") String id, 
+    public ResponseEntity<Object> upload(@RequestParam("upload_id") String id, 
             @RequestHeader("Content-Length") Long contentLength, 
             @RequestHeader("Content-Range") String contentRange,
             @RequestBody(required = false) String data, // file binary diencode dengan Base64
             HttpServletRequest request
             ) throws IOException{
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Range", "0-1000");
-
+        
+        Map<String, Object> responseBody = new HashMap<String, Object>();
+        
+        
         System.out.println("Content-Length : "+contentLength);
         System.out.println("Content-Range : "+contentRange);
         
         // parsing content range
         String[] partTotal = contentRange.split("/");
         if(partTotal.length != 2){
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            responseBody.put("success", false);
+            responseBody.put("message", "Content-Range format : start-end/total");
+            return new ResponseEntity<Object>(responseBody,HttpStatus.BAD_REQUEST);
         }
         String[] startEnd = partTotal[0].split("-");
         if(startEnd.length != 2){
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            responseBody.put("success", false);
+            responseBody.put("message", "Content-Range format : start-end/total");
+            return new ResponseEntity<Object>(responseBody,HttpStatus.BAD_REQUEST);
         }
         
         Long start = Long.valueOf(startEnd[0]);
@@ -108,7 +125,9 @@ public class UploadController {
         
         InfoFile info = databaseInfoFile.get(id);
         if(info == null){
-            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            responseBody.put("success", false);
+            responseBody.put("message", "Invalid upload_id");
+            return new ResponseEntity<Object>(responseBody,HttpStatus.BAD_REQUEST);
         }
         
         String folderTujuan = request.getServletContext()
@@ -138,16 +157,19 @@ public class UploadController {
             Boolean checksumOk = FileHelper.verifySum(hasil, info.getSha1Sum());
             System.out.println("Hasil verifikasi checksum : "+checksumOk);
             if(checksumOk){
-                return new ResponseEntity<String>(null, 
-                responseHeaders, HttpStatus.CREATED);
+                responseBody.put("success", true);
+                responseBody.put("message", "File joined at "+hasil.getAbsolutePath());
+                return new ResponseEntity<Object>(responseBody,HttpStatus.CREATED);
             } else {
-                return new ResponseEntity<String>(null, 
-                responseHeaders, HttpStatus.BAD_REQUEST);
+                responseBody.put("success", false);
+                responseBody.put("message", "Checksum mismatch, harusnya "+info.getSha1Sum()+", ternyata "+FileHelper.shaSum(hasil));
+                return new ResponseEntity<Object>(responseBody,HttpStatus.BAD_REQUEST);
             }
             
         } 
         
-        return new ResponseEntity<String>(null, 
-                responseHeaders, HttpStatus.ACCEPTED);
+        responseBody.put("success", true);
+        responseBody.put("message", "File diterima, silahkan lanjutkan upload");
+        return new ResponseEntity<Object>(responseBody,HttpStatus.OK);
     }
 }

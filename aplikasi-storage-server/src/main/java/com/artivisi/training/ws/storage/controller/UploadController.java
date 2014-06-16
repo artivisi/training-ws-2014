@@ -1,6 +1,8 @@
 package com.artivisi.training.ws.storage.controller;
 
 import com.artivisi.training.ws.domain.InfoFile;
+import com.artivisi.training.ws.helper.FileHelper;
+import com.google.common.io.Files;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -9,7 +11,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
-import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UploadController {
     
     private final SecureRandom random = new SecureRandom();
-    private static final String folderUpload = "/data";
+    private static final String folderUpload = "/upload";
     
     private final Map<String, InfoFile> databaseInfoFile 
             = new ConcurrentHashMap<String, InfoFile>();
@@ -51,9 +52,14 @@ public class UploadController {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
         
+        if(metadata.get("sha1Sum") == null){
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+        
         InfoFile info = new InfoFile();
         info.setNama(metadata.get("nama"));
         info.setContentType(metadata.get("Content-Type"));
+        info.setSha1Sum(metadata.get("sha1Sum"));
         
         String uploadId = new BigInteger(130, random).toString(32);
         System.out.println("Generate random upload id : "+uploadId);
@@ -105,24 +111,43 @@ public class UploadController {
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
         
-        String fileTujuan = request.getServletContext()
-                .getRealPath(folderUpload)
-                + File.separator + id
-                + File.separator + info.getNama();
+        String folderTujuan = request.getServletContext()
+                .getRealPath(folderUpload+File.separator+id);
+        
+        // buat dulu parent folder bila tidak ada
+        new File(folderTujuan).mkdirs();
+        
+        String fileTujuan = folderTujuan
+                + File.separator + info.getNama()
+                + "-"
+                + String.format("%09d", (start / 1000));
         
         if(data != null && data.trim().length() > 0){
             System.out.println("Data size : "+data.length());
             
             // konversi balik (decode) dari String ke byte[] dengan Base64
             byte[] hasil = DatatypeConverter.parseBase64Binary(data);
-            
-            File tujuan = new File(fileTujuan);
-            FileUtils.writeByteArrayToFile(tujuan, hasil);
+            Files.write(hasil, new File(fileTujuan));            
             System.out.println("Menulis hasil upload ke "+fileTujuan);
         }
         
-        ResponseEntity<String> response = new ResponseEntity<String>(null, 
-                responseHeaders, HttpStatus.RESUME_INCOMPLETE);
-        return response;
+        if(end.equals(Long.valueOf(partTotal[1]))) {
+            System.out.println("File lengkap, gabungkan");
+            File hasil = FileHelper.joinFiles(folderTujuan, folderTujuan, info.getNama());
+            System.out.println("File hasil gabungan : "+hasil.getAbsolutePath());
+            Boolean checksumOk = FileHelper.verifySum(hasil, info.getSha1Sum());
+            System.out.println("Hasil verifikasi checksum : "+checksumOk);
+            if(checksumOk){
+                return new ResponseEntity<String>(null, 
+                responseHeaders, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<String>(null, 
+                responseHeaders, HttpStatus.BAD_REQUEST);
+            }
+            
+        } 
+        
+        return new ResponseEntity<String>(null, 
+                responseHeaders, HttpStatus.ACCEPTED);
     }
 }

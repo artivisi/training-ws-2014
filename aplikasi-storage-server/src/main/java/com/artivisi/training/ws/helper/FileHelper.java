@@ -42,7 +42,8 @@ public class FileHelper {
             File output = new File(outputFolder + File.separator + UUID.randomUUID().toString());
             
             // input folder
-            Path inputLocation = Paths.get(".", inputFolder);
+            Path inputLocation = Paths.get(inputFolder);
+            System.out.println("Path : "+inputLocation.toString());
             
             // daftar nama file
             List<String> inputFiles = new ArrayList<String>();

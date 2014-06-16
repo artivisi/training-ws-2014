@@ -3,6 +3,7 @@ package com.artivisi.training.ws.domain;
 public class InfoFile {
     private String nama;
     private String contentType;
+    private String sha1Sum;
 
     public String getNama() {
         return nama;
@@ -18,5 +19,13 @@ public class InfoFile {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public String getSha1Sum() {
+        return sha1Sum;
+    }
+
+    public void setSha1Sum(String sha1Sum) {
+        this.sha1Sum = sha1Sum;
     }
 }

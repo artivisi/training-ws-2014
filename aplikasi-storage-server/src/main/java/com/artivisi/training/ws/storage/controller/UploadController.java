@@ -139,10 +139,12 @@ public class UploadController {
         String fileTujuan = folderTujuan
                 + File.separator + info.getNama()
                 + "-"
-                + String.format("%09d", (start / 1000));
+                + String.format("%09d", (start));
         
         if(data != null && data.trim().length() > 0){
+            System.out.println("=================================");
             System.out.println("Data size : "+data.length());
+            System.out.println("=================================");
             
             // konversi balik (decode) dari String ke byte[] dengan Base64
             byte[] hasil = DatatypeConverter.parseBase64Binary(data);

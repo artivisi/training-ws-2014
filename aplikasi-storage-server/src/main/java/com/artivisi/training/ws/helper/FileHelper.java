@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.badiff.FileDiffs;
+import org.badiff.imp.FileDiff;
 
 public class FileHelper {
     public static String shaSum(File f){
@@ -71,4 +73,24 @@ public class FileHelper {
             return null;
         } 
     }
+    
+    public static File generateDiff(File awal, File akhir){
+        try {
+            return FileDiffs.diff(awal, akhir).getCanonicalFile();
+        } catch (IOException ex) {
+            Logger.getLogger(FileHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public static File applyDiff(File awal, File diff){
+        try {
+            FileDiff fd = new FileDiff(diff);
+            return FileDiffs.apply(awal, fd);
+        } catch (IOException ex) {
+            Logger.getLogger(FileHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 }
+

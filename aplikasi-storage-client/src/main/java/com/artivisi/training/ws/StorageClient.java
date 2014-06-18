@@ -1,5 +1,6 @@
 package com.artivisi.training.ws;
 
+import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +26,7 @@ public class StorageClient {
             Map<String, String> data = new HashMap<String, String>();
             data.put("nama", "tutorial.pdf");
             data.put("Content-Type", "application/pdf");
-            data.put("sha1Sum", "6cc581c57aaf14b5b2349d6bf1c4c4efb1618694");
+            data.put("sha1Sum", Files.hash(f, Hashing.sha1()).toString());
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

@@ -12,3 +12,7 @@ aplikasi-storage-server/src/main/webapp/upload
 .classpath
 .settings
 bin
+
+# Idea Ignore
+.idea
+*.iml

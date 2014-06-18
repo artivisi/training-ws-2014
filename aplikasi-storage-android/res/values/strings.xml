@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">HelloWorldActivity</string>
+    <string name="app_name">Aplikasi Storage</string>
+    <string name="lbl_server_url">Masukkan URL Server</string>
 </resources>

@@ -7,7 +7,21 @@
 <TextView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Hello World, HelloWorldActivity"
-    />
+    android:text="@string/lbl_server_url" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtServerUrl"
+        android:layout_gravity="center_horizontal"
+        android:text="http://10.142.9.134:8080" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload File"
+        android:id="@+id/btnUpload"
+        android:layout_gravity="center_horizontal"
+        android:onClick="prosesUpload" />
 </LinearLayout>
 

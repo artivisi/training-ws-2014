@@ -6,3 +6,9 @@ nb-configuration.xml
 
 # Hasil Upload
 aplikasi-storage-server/src/main/webapp/upload
+
+# Eclipse Ignore
+.project
+.classpath
+.settings
+bin
